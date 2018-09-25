@@ -1,21 +1,27 @@
 import pygame
 import util
 
-RESOLUTION = 400, 400
+RESOLUTION = 800, 800
 
 STARTING_SIZE = 13
 SIZE_LIMIT = 200
 SIZE_STEP = 3
+MOVEMENT_SPEED = 7
 
 
 def main():
     pygame.init()
     screen = pygame.display.set_mode(RESOLUTION)
+    buffer = pygame.Surface(RESOLUTION)
 
-    screen.fill(util.get_random_color())
     size = STARTING_SIZE
 
+    background = util.get_random_color()
+    screen.fill(background)
+
     while True:
+        buffer.blit(screen, (0, 0))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit(0)
@@ -32,12 +38,16 @@ def main():
             pos = pygame.mouse.get_pos()
             pos = pos[0] - w // 2, pos[1] - h // 2
 
-            screen.blit(char, pos)
+            buffer.blit(char, pos)
             size += SIZE_STEP
         else:
             size = STARTING_SIZE
 
-        pygame.display.flip()
+        if MOVEMENT_SPEED:
+            screen.fill(background)
+        screen.blit(buffer, (-MOVEMENT_SPEED, 0))
+
+        pygame.display.update()
         pygame.time.delay(25)
 
 
