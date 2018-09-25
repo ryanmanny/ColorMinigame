@@ -1,5 +1,5 @@
 import pygame
-import util
+import random
 
 RESOLUTION = 800, 800
 
@@ -9,7 +9,16 @@ SIZE_STEP = 3
 MOVEMENT_SPEED = 7
 
 
-def main():
+def get_random_char(size, color):
+    char = chr(random.randint(33, 127))
+    return pygame.font.Font(pygame.font.get_default_font(), size).render(char, False, color)
+
+
+def get_random_color():
+    return random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+
+
+def play():
     pygame.init()
     screen = pygame.display.set_mode(RESOLUTION)
     buffer = pygame.Surface(RESOLUTION)
